@@ -21,7 +21,7 @@ onMounted(() => {
         <h2>Quests</h2>
         <ul>
             <li v-for="task in gameStore.tasks" :key="task.id">
-                {{ task.title }} - {{ task.difficulty }} - {{ task.intensity }}
+                {{ task.title }} - {{ task.difficulty }} - {{ task.intensity }} - {{ task.completed ? 'Completed' : 'Incomplete' }}
                 <button v-if="!task.completed" @click="gameStore.completeTask(task.id)">Complete</button>
             </li>
         </ul>
