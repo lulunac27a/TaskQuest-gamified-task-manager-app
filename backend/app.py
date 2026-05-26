@@ -24,4 +24,5 @@ class Task(db.Model):
     title = db.Column(db.String(120), nullable=False)
     description = db.Column(db.Text, nullable=True)
     difficulty = db.Column(db.Integer, default=1)  # 1: Easy, 2: Medium, 3: Hard
+    intensity = db.Column(db.Integer, default=1)  # 1: Low, 2: Medium, 3: High
     completed = db.Column(db.Boolean, default=False)

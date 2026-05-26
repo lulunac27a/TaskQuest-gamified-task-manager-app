@@ -6,6 +6,7 @@ const gameStore = useGameStore();
 const title = ref('');
 const description = ref('');
 const difficulty = ref(1);
+const intensity = ref(1);
 const isSubmitting = ref(false);
 
 const handleSubmit = async () => {
@@ -15,6 +16,7 @@ const handleSubmit = async () => {
   title.value = '';
   description.value = '';
   difficulty.value = 1;
+  intensity.value = 1;
   isSubmitting.value = false;
 };
 </script>
@@ -38,7 +40,15 @@ const handleSubmit = async () => {
           <option :value="3">Hard</option>
         </select>
       </div>
+        <div>
+            <label for="intensity">Intensity:</label>
+            <select id="intensity" v-model.number="intensity">
+            <option :value="1">Low</option>
+            <option :value="2">Medium</option>
+            <option :value="3">High</option>
+            </select>
+        </div>
       <button type="submit" :disabled="isSubmitting">Create Task</button>
     </form>
   </div>
-</template>
+</template> 

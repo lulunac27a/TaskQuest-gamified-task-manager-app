@@ -8,6 +8,7 @@ interface Task {
     title: string
     description: string
     difficulty: number
+    intensity: number
     completed: boolean
 }
 export const useGameStore = defineStore('game', {
@@ -29,7 +30,7 @@ export const useGameStore = defineStore('game', {
                 const res = await fetch('/api/profile')
                 this.user = res.data
         },
-        async createTask(title: string, description: string, difficulty: number) {
+        async createTask(title: string, description: string, difficulty: number, intensity: number) {
             try {
                 const res = await axios.post('/api/tasks/create', { title, description, difficulty })
                 this.tasks.push(res.data)

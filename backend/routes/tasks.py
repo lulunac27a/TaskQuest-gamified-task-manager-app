@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from models import db, User, Task
+from math import floor
 
 tasks_bp = Blueprint('tasks', __name__)
 
@@ -8,6 +9,12 @@ DIFFICULTY_XP = {
     1: 10,  # Easy
     2: 20,  # Medium
     3: 40   # Hard
+}
+
+INTENSITY_MULTIPLIER = {
+    1: 1.0,  # Low
+    2: 1.5,  # Medium
+    3: 2.0   # High
 }
 
 @tasks_bp.route('/tasks', methods=['POST'])
@@ -18,11 +25,12 @@ def create_task():
     title = data.get('title')
     description = data.get('description', '')
     difficulty = data.get('difficulty', 1)
+    intensity = data.get('intensity', 1)
 
     if not title:
         return jsonify({'error': 'Title is required'}), 400
 
-    task = Task(user_id=user_id, title=title, description=description, difficulty=difficulty)
+    task = Task(user_id=user_id, title=title, description=description, difficulty=difficulty, intensity=intensity)
     db.session.add(task)
     db.session.commit()
 
@@ -31,6 +39,7 @@ def create_task():
         'title': task.title,
         'description': task.description,
         'difficulty': task.difficulty,
+        'intensity': task.intensity,
         'completed': task.completed
     }}), 201
 
@@ -50,7 +59,7 @@ def complete_task(task_id):
     db.session.commit()
 
     user = User.query.get(user_id)
-    xp_reward = DIFFICULTY_XP.get(task.difficulty, 10)
+    xp_reward = floor(DIFFICULTY_XP.get(task.difficulty, 10) * INTENSITY_MULTIPLIER.get(task.intensity, 1.0))
     user.add_xp(xp_reward)
     db.session.commit()
 
