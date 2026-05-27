@@ -6,15 +6,21 @@ from math import floor
 tasks_bp = Blueprint('tasks', __name__)
 
 DIFFICULTY_XP = {
-    1: 10,  # Easy
-    2: 20,  # Medium
-    3: 40   # Hard
+    1: 15,  # Easy
+    2: 25,  # Medium
+    3: 50,  # Hard
+    4: 100,  # Very Hard
+    5: 200,  # Extreme
+    6: 300   # Legendary
 }
 
 INTENSITY_MULTIPLIER = {
     1: 1.0,  # Low
     2: 1.5,  # Medium
-    3: 2.0   # High
+    3: 2.0,  # High
+    4: 2.5,  # Very High
+    5: 3.0,  # Extreme
+    6: 4.0   # Legendary
 }
 
 @tasks_bp.route('/tasks', methods=['POST'])

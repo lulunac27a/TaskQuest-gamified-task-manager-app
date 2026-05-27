@@ -38,6 +38,9 @@ const handleSubmit = async () => {
           <option :value="1">Easy</option>
           <option :value="2">Medium</option>
           <option :value="3">Hard</option>
+          <option :value="4">Very Hard</option>
+          <option :value="5">Extreme</option>
+          <option :value="6">Legendary</option>
         </select>
       </div>
         <div>
@@ -46,6 +49,9 @@ const handleSubmit = async () => {
             <option :value="1">Low</option>
             <option :value="2">Medium</option>
             <option :value="3">High</option>
+            <option :value="4">Very High</option>
+            <option :value="5">Extreme</option>
+            <option :value="6">Legendary</option>
             </select>
         </div>
       <button type="submit" :disabled="isSubmitting">Create Task</button>
