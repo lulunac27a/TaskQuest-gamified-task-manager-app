@@ -15,7 +15,7 @@ onMounted(() => {
         <p>Experience: {{ gameStore.profile?.experience }}</p>
     </div>
     <div class="progress">
-        <div :style="{ width: gameStore.progress + '%' }" class="progress-bar"></div>
+        <div :style="{ width: gameStore.xpProgress + '%' }" class="progress-bar"></div>
     </div>
     <div>
         <h2>Quests</h2>
