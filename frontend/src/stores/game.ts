@@ -27,8 +27,12 @@ export const useGameStore = defineStore('game', {
     },
     actions: {
         async fetchProfile() {
+            try {
                 const res = await fetch('/api/profile')
                 this.user = res.data
+            } catch (error) {
+                console.error('Error fetching profile:', error)
+            }
         },
         async createTask(title: string, description: string, difficulty: number, intensity: number) {
             try {
