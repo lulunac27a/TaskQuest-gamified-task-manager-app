@@ -1,3 +1,12 @@
+import os
+from flask import Flask
+from flask_jwt_extended import JWTManager
+from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
+from models import db, User, Task
+from routes.tasks import tasks_bp
+
+
 def create_app():  # function to create and configure the Flask app
     app = Flask(__name__)  # create Flask app instance
     app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv(
