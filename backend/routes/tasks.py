@@ -25,9 +25,59 @@ INTENSITY_MULTIPLIER = {  # XP multipliers based on task intensity
 }
 
 
+@tasks_bp.route("", methods=["GET"])
+def get_tasks():
+    current_user_id = 1  # Hardcoded test user ID
+    tasks = Task.query.filter_by(user_id=current_user_id).all()
+    return (
+        jsonify(
+            [
+                {
+                    "id": t.id,
+                    "title": t.title,
+                    "difficulty": t.difficulty,
+                    "is_completed": t.is_completed,
+                }
+                for t in tasks
+            ]
+        ),
+        200,
+    )
+
+
+@tasks_bp.route("/create", methods=["POST"])
+def create_task():
+    current_user_id = 1
+    data = request.get_json() or {}
+    title = data.get("title", "").strip()
+    difficulty = data.get("difficulty", "medium").lower()
+
+    if not title:
+        return jsonify({"error": "Quest title is required"}), 400
+    if difficulty not in ["easy", "medium", "hard"]:
+        return jsonify({"error": "Invalid difficulty rating"}), 400
+
+    new_task = Task(user_id=current_user_id,
+                    title=title, difficulty=difficulty)
+    db.session.add(new_task)
+    db.session.commit()
+
+    return (
+        jsonify(
+            {
+                "id": new_task.id,
+                "title": new_task.title,
+                "difficulty": new_task.difficulty,
+                "is_completed": new_task.is_completed,
+            }
+        ),
+        201,
+    )
+
+
 @tasks_bp.route("/tasks", methods=["POST"])
 @jwt_required()
-def create_task():  # function to create a new task for the authenticated user
+def create_task2():  # function to create a new task for the authenticated user
     user_id = get_jwt_identity()  # get user id from JWT token
     data = request.get_json()  # get task data from request body
     title = data.get("title")  # get task title from request data
@@ -72,9 +122,40 @@ def create_task():  # function to create a new task for the authenticated user
     )
 
 
+@tasks_bp.route("/<int:task_id>/complete", methods=["POST"])
+def complete_task(task_id):
+    current_user_id = 1
+    task = Task.query.filter_by(
+        id=task_id, user_id=current_user_id).first_or_404()
+
+    if task.is_completed:
+        return jsonify({"error": "Quest already resolved!"}), 400
+
+    user = db.session.get(User, current_user_id)
+    rewards = DIFFICULTY_REWARDS.get(
+        task.difficulty, DIFFICULTY_REWARDS["medium"])
+
+    task.is_completed = True
+    user.gold += rewards["gold"]
+    leveled_up = user.add_xp(rewards["xp"])
+
+    db.session.commit()
+
+    return (
+        jsonify(
+            {
+                "message": "Quest Complete!",
+                "leveled_up": leveled_up,
+                "user": {"level": user.level, "xp": user.xp, "gold": user.gold},
+            }
+        ),
+        200,
+    )
+
+
 @tasks_bp.route("/tasks/<int:task_id>/complete", methods=["POST"])
 @jwt_required()
-def complete_task(
+def complete_task2(
     task_id,
 ):  # function to mark a task as completed and reward XP to the user
     user_id = get_jwt_identity()  # get user id from JWT token
