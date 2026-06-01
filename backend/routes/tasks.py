@@ -5,7 +5,7 @@ from math import floor
 
 tasks_bp = Blueprint("tasks", __name__)
 
-DIFFICULTY_XP = {
+DIFFICULTY_XP = {  # XP rewards based on task difficulty
     1: 15,  # Easy
     2: 25,  # Medium
     3: 50,  # Hard
@@ -14,7 +14,7 @@ DIFFICULTY_XP = {
     6: 300,  # Legendary
 }
 
-INTENSITY_MULTIPLIER = {
+INTENSITY_MULTIPLIER = {  # XP multipliers based on task intensity
     1: 1.0,  # Low
     2: 1.5,  # Medium
     3: 2.0,  # High
@@ -26,15 +26,21 @@ INTENSITY_MULTIPLIER = {
 
 @tasks_bp.route("/tasks", methods=["POST"])
 @jwt_required()
-def create_task():
-    user_id = get_jwt_identity()
-    data = request.get_json()
-    title = data.get("title")
-    description = data.get("description", "")
-    difficulty = data.get("difficulty", 1)
-    intensity = data.get("intensity", 1)
+def create_task():  # function to create a new task for the authenticated user
+    user_id = get_jwt_identity()  # get user id from JWT token
+    data = request.get_json()  # get task data from request body
+    title = data.get("title")  # get task title from request data
+    description = data.get(
+        "description", ""
+    )  # get task description from request data, default to empty string if not provided
+    difficulty = data.get(
+        "difficulty", 1
+    )  # get task difficulty from request data, default to 1 (Easy) if not provided
+    intensity = data.get(
+        "intensity", 1
+    )  # get task intensity from request data, default to 1 (Low) if not provided
 
-    if not title:
+    if not title:  # if title is not provided in request data, return error response
         return jsonify({"error": "Title is required"}), 400
 
     task = Task(
@@ -43,15 +49,15 @@ def create_task():
         description=description,
         difficulty=difficulty,
         intensity=intensity,
-    )
+    )  # add new task to database with provided data and user id
     db.session.add(task)
-    db.session.commit()
+    db.session.commit()  # commit changes to database
 
     return (
         jsonify(
             {
                 "message": "Task created successfully",
-                "task": {
+                "task": {  # return created task data in response
                     "id": task.id,
                     "title": task.title,
                     "description": task.description,
@@ -67,28 +73,32 @@ def create_task():
 
 @tasks_bp.route("/tasks/<int:task_id>/complete", methods=["POST"])
 @jwt_required()
-def complete_task(task_id):
-    user_id = get_jwt_identity()
-    task = Task.query.filter_by(id=task_id, user_id=user_id).first()
+def complete_task(
+    task_id,
+):  # function to mark a task as completed and reward XP to the user
+    user_id = get_jwt_identity()  # get user id from JWT token
+    task = Task.query.filter_by(
+        id=task_id, user_id=user_id
+    ).first()  # find task by id and user id in database
 
-    if not task:
+    if not task:  # if task is not found in database, return error response
         return jsonify({"error": "Task not found"}), 404
 
-    if task.completed:
+    if task.completed:  # if task is already completed, return error response
         return jsonify({"error": "Task already completed"}), 400
 
-    task.completed = True
+    task.completed = True  # set task as completed
     db.session.commit()
 
-    user = User.query.get(user_id)
+    user = User.query.get(user_id)  # find user by id in database
     xp_reward = floor(
         DIFFICULTY_XP.get(task.difficulty, 10)
         * INTENSITY_MULTIPLIER.get(task.intensity, 1.0)
-    )
-    user.add_xp(xp_reward)
+    )  # calculate XP reward based on task difficulty and intensity, default to 10 XP for difficulty and 1.0 multiplier for intensity if not found in dictionaries
+    user.add_xp(xp_reward)  # add XP to user based on calculated reward
     db.session.commit()
 
     return (
         jsonify({"message": "Task completed successfully", "xp_reward": xp_reward}),
         200,
-    )
+    )  # return success response with XP reward for completing the task
