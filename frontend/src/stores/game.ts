@@ -29,10 +29,14 @@ export const useGameStore = defineStore("game", {
     actions: {
         async fetchProfile() {
             try {
-                const res = await fetch("/api/profile");
-                this.user = res.data;
+                const profileRes = await axios.get("/api/user/profile");
+                this.user = profileRes.data;
+
+                // Simultaneously fetch tasks from our new route
+                const tasksRes = await axios.get("/api/tasks");
+                this.tasks = tasksRes.data;
             } catch (error) {
-                console.error("Error fetching profile:", error);
+                console.error("Failed to load initial dataset:", error);
             }
         },
         async createTask(
