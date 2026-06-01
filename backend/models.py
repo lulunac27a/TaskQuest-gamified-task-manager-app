@@ -40,4 +40,4 @@ class Task(db.Model):  # task model with difficulty and intensity
     description = db.Column(db.Text, nullable=True)  # task description
     difficulty = db.Column(db.Integer, default=1)  # task difficulty
     intensity = db.Column(db.Integer, default=1)  # task intensity
-    completed = db.Column(db.Boolean, default=False)  # is task completed
+    is_completed = db.Column(db.Boolean, default=False)  # is task completed
