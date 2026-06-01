@@ -36,6 +36,19 @@ def create_app():  # function to create and configure the Flask app
             200,
         )
 
+    @app.route("/", methods=["GET"])
+    def backend_status():
+        return (
+            jsonify(
+                {
+                    "status": "online",
+                    "game_engine": "TaskQuest API v1.0",
+                    "frontend_target": "http://localhost:5173",
+                }
+            ),
+            200,
+        )
+
     with app.app_context():
         from routes.tasks import tasks_bp
 
