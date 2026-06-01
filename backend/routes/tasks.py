@@ -35,7 +35,9 @@ def get_tasks():
                 {
                     "id": t.id,
                     "title": t.title,
-                    "difficulty": t.difficulty,
+                    "difficulty": (
+                        int(t.difficulty) if str(t.difficulty).isdigit() else 2
+                    ),
                     "is_completed": t.is_completed,
                 }
                 for t in tasks
@@ -50,15 +52,20 @@ def create_task():
     current_user_id = 1
     data = request.get_json() or {}
     title = data.get("title", "").strip()
-    difficulty = data.get("difficulty", "medium").lower()
-
+    try:
+        difficulty_input = int(data.get("difficulty", 2))
+        if difficulty_input < 1 or difficulty_input > 6:
+            return (
+                jsonify({"error": "Difficulty rating must scale between 1 and 6"}),
+                400,
+            )
+    except (ValueError, TypeError):
+        return jsonify({"error": "Difficulty must be a valid integer"}), 400
     if not title:
         return jsonify({"error": "Quest title is required"}), 400
-    if difficulty not in ["easy", "medium", "hard"]:
-        return jsonify({"error": "Invalid difficulty rating"}), 400
 
-    new_task = Task(user_id=current_user_id,
-                    title=title, difficulty=difficulty)
+    new_task = Task(user_id=current_user_id, title=title,
+                    difficulty=difficulty_input)
     db.session.add(new_task)
     db.session.commit()
 
