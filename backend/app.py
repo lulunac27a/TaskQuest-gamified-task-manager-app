@@ -33,22 +33,22 @@ if __name__ == "__main__":
     )  # run app on localhost with debug mode enabled
 
 
-class User(db.Model):  # user model with xp and level
+class User(db.Model):  # user model with XP and level
     id = db.Column(db.Integer, primary_key=True)  # user id
     username = db.Column(db.String(80), unique=True,
                          nullable=False)  # username
-    xp = db.Column(db.Integer, default=0)  # user xp
+    xp = db.Column(db.Integer, default=0)  # user XP
     level = db.Column(db.Integer, default=1)  # user level
     tasks = db.relationship("Task", backref="user",
                             lazy=True)  # user tasks list
 
-    def add_xp(self, amount):  # function to add xp and level up if necessary
-        self.xp += amount  # add xp to user
-        xp_needed = self.level * 100  # xp needed to level up
-        while self.xp >= xp_needed:  # check if user has enough xp to level up
-            self.xp -= xp_needed  # subtract xp needed to level up from user xp
+    def add_xp(self, amount):  # function to add XP and level up if necessary
+        self.xp += amount  # add XP to user
+        xp_needed = self.level * 100  # XP needed to level up
+        while self.xp >= xp_needed:  # check if user has enough XP to level up
+            self.xp -= xp_needed  # subtract XP needed to level up from user XP
             self.level += 1  # increase user level
-            xp_needed = self.level * 100  # update xp needed for next level
+            xp_needed = self.level * 100  # update XP needed for next level
 
 
 class Task(db.Model):  # task model with difficulty and intensity
