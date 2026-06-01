@@ -2,7 +2,7 @@ import os
 from flask import Flask
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
-from flask_sqlalachemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 from models import db, User, Task
 from routes.tasks import tasks_bp
 
