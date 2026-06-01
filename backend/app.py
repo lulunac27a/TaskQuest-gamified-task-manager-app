@@ -33,7 +33,7 @@ def create_app():  # function to create and configure the Flask app
         # Seed a test user if none exists
         if not User.query.get(1):  # check if test user with id 1 exists in database
             test_user = User(
-                id=1, username="TestHero", xp=0, level=1, gold=100
+                id=1, username="TestHero", xp=0, level=1
             )  # create test user with default values
             test_user.set_password("password123")  # set password for test user
             db.session.add(test_user)  # add test user to database session

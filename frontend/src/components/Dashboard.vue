@@ -16,7 +16,6 @@ onMounted(() => {
             <h2 class="text-2xl font-bold mb-2">🛡️ Hero Dashboard</h2>
             <div class="flex justify-between text-sm mb-1">
                 <span>Level {{ gameStore.user.level }}</span>
-                <span>🪙 {{ gameStore.user.gold }} Gold</span>
             </div>
 
             <!-- XP Progress Bar -->
