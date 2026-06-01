@@ -22,11 +22,9 @@ def create_app():  # function to create and configure the Flask app
     CORS(app)  # enable CORS for all routes
 
     with app.app_context():
-        from routes.auth import auth_bp
         from routes.tasks import tasks_bp
 
         # register blueprints for authentication and task management routes
-        app.register_blueprint(auth_bp)
         app.register_blueprint(
             tasks_bp, url_prefix="/api/tasks"
         )  # prefix task routes with /api
