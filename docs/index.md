@@ -7,6 +7,6 @@ and SQLAlchemy for storing user data.
 
 1. Clone the repository.
 2. Install dependencies:
-   `pip install flask flask-sqlalchemy flask-jwt-extended flask-cors`
+   `pip install flask flask-sqlalchemy flask-jwt-extended flask-cors werkzeug`
 3. Change directory: `cd backend`
 4. Run the program: `python app.py`
