@@ -21,6 +21,21 @@ def create_app():  # function to create and configure the Flask app
     JWTManager(app)  # initialize JWT manager with app context
     CORS(app)  # enable CORS for all routes
 
+    @app.route("/api/user/profile", methods=["GET"])
+    def get_profile():
+        user = db.session.get(User, 1)  # Fetch our hardcoded test hero
+        return (
+            jsonify(
+                {
+                    "username": user.username,
+                    "level": user.level,
+                    "xp": user.xp,
+                    "gold": user.gold,
+                }
+            ),
+            200,
+        )
+
     with app.app_context():
         from routes.tasks import tasks_bp
 
