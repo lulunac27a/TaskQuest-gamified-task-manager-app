@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import axios from "axios";
 interface UserState {
     level: number;
     xp: number;
