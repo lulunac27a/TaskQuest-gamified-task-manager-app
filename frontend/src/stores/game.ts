@@ -58,6 +58,8 @@ export const useGameStore = defineStore("game", {
         },
         async completeTask(taskId: number) {
             try {
+                const res = await axios.post(`/api/tasks/${taskId}/complete`);
+                this.user = res.data.user;
                 const task = this.tasks.find((t) => t.id === taskId);
                 if (task) {
                     task.completed = true;
