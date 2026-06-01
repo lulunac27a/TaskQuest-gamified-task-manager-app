@@ -3,6 +3,7 @@ from flask import Flask
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
 from models import db, User, Task
 from routes.tasks import tasks_bp
 
