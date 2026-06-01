@@ -1,6 +1,7 @@
 # TaskQuest Gamified Task Manager App
 
-This is TaskQuest, a gamified task manager app. It uses Flask and SQLAlchemy.
+This is TaskQuest, a gamified task manager app. It uses Flask for the templates
+and SQLAlchemy for storing user data.
 
 ### Getting Started
 
