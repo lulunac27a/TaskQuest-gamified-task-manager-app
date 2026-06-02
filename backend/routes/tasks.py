@@ -145,7 +145,7 @@ def complete_task(task_id):
     )
 
     task.is_completed = True
-    leveled_up = user.add_xp(rewards["xp"])
+    leveled_up = user.add_xp(rewards)
 
     db.session.commit()
 
