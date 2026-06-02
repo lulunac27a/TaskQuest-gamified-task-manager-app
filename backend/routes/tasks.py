@@ -48,7 +48,7 @@ def get_tasks():
 
 
 @tasks_bp.route("/create", methods=["POST"])
-def create_task():
+def create_task():  # function to create a new task for the hardcoded test user
     current_user_id = 1
     data = request.get_json() or {}
     title = data.get("title", "").strip()
@@ -130,7 +130,9 @@ def create_task2():  # function to create a new task for the authenticated user
 
 
 @tasks_bp.route("/<int:task_id>/complete", methods=["POST"])
-def complete_task(task_id):
+def complete_task(
+    task_id,
+):  # function to mark a task as completed and reward XP to the user
     current_user_id = 1
     task = Task.query.filter_by(
         id=task_id, user_id=current_user_id).first_or_404()
