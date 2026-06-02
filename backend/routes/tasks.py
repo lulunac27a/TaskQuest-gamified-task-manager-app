@@ -139,11 +139,12 @@ def complete_task(task_id):
         return jsonify({"error": "Quest already resolved!"}), 400
 
     user = db.session.get(User, current_user_id)
-    rewards = DIFFICULTY_REWARDS.get(
-        task.difficulty, DIFFICULTY_REWARDS["medium"])
+    rewards = floor(
+        DIFFICULTY_XP.get(task.difficulty, 10)
+        * INTENSITY_MULTIPLIER.get(task.intensity, 1.0)
+    )
 
     task.is_completed = True
-    user.gold += rewards["gold"]
     leveled_up = user.add_xp(rewards["xp"])
 
     db.session.commit()
@@ -153,7 +154,7 @@ def complete_task(task_id):
             {
                 "message": "Quest Complete!",
                 "leveled_up": leveled_up,
-                "user": {"level": user.level, "xp": user.xp, "gold": user.gold},
+                "user": {"level": user.level, "xp": user.xp},
             }
         ),
         200,

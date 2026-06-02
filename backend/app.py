@@ -30,7 +30,6 @@ def create_app():  # function to create and configure the Flask app
                     "username": user.username,
                     "level": user.level,
                     "xp": user.xp,
-                    "gold": user.gold,
                 }
             ),
             200,
