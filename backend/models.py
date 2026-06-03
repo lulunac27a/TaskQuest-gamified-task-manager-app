@@ -25,7 +25,7 @@ class User(db.Model):  # user model with XP and level
 
     def add_xp(self, amount):  # function to add XP and level up if necessary
         self.xp += amount  # add XP to user
-        xp_needed = self.level * 100  # XP needed to level up
+        xp_needed: int = self.level * 100  # XP needed to level up
         while self.xp >= xp_needed:  # check if user has enough XP to level up
             self.xp -= xp_needed  # subtract XP needed to level up from user XP
             self.level += 1  # increase user level

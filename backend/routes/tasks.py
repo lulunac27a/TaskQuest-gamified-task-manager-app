@@ -6,7 +6,7 @@ from math import floor
 
 tasks_bp = Blueprint("tasks", __name__)
 
-DIFFICULTY_XP = {  # XP rewards based on task difficulty
+DIFFICULTY_XP: dict[int, int] = {  # XP rewards based on task difficulty
     1: 15,  # Easy
     2: 25,  # Medium
     3: 50,  # Hard
@@ -15,7 +15,7 @@ DIFFICULTY_XP = {  # XP rewards based on task difficulty
     6: 300,  # Legendary
 }
 
-INTENSITY_MULTIPLIER = {  # XP multipliers based on task intensity
+INTENSITY_MULTIPLIER: dict[int, float] = {  # XP multipliers based on task intensity
     1: 1.0,  # Low
     2: 1.5,  # Medium
     3: 2.0,  # High
@@ -183,7 +183,7 @@ def complete_task2(
     db.session.commit()
 
     user = User.query.get(user_id)  # find user by id in database
-    xp_reward = floor(
+    xp_reward: int = floor(
         DIFFICULTY_XP.get(task.difficulty, 10)
         * INTENSITY_MULTIPLIER.get(task.intensity, 1.0)
     )  # calculate XP reward based on task difficulty and intensity, default to 10 XP for difficulty and 1.0 multiplier for intensity if not found in dictionaries
