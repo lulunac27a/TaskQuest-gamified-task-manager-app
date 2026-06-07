@@ -17,7 +17,6 @@ onMounted(() => {
             <div class="flex justify-between text-sm mb-1">
                 <span>Level {{ gameStore.user.level }}</span>
             </div>
-
             <!-- XP Progress Bar -->
             <div class="w-full bg-slate-700 h-4 rounded-full overflow-hidden">
                 <div
@@ -29,7 +28,6 @@ onMounted(() => {
                 {{ gameStore.user.xp }} / {{ gameStore.user.level * 100 }} XP
             </p>
         </div>
-
         <!-- Active Quests -->
         <div>
             <h3 class="text-xl font-semibold mb-3">📜 Active Quests</h3>
@@ -39,6 +37,7 @@ onMounted(() => {
                     :key="task.id"
                     class="flex justify-between items-center bg-slate-800 p-3 rounded"
                 >
+                    <!--repeat for each task in task list-->
                     <div>
                         <span
                             :class="{
