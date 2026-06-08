@@ -53,14 +53,22 @@ onMounted(() => {
                             {{ task.difficulty }}
                         </span>
                     </div>
-                    <button
-                        v-if="!task.is_completed"
-                        @click="gameStore.completeTask(task.id)"
-                        class="bg-emerald-600 hover:bg-emerald-500 text-xs px-3 py-1.5 rounded font-bold"
-                    >
-                        <!--display complete button if task is not completed-->
-                        Complete
-                    </button>
+                    <div class="flex gap-2">
+                        <button
+                            v-if="!task.is_completed"
+                            @click="gameStore.completeTask(task.id)"
+                            class="bg-emerald-600 hover:bg-emerald-500 text-xs px-3 py-1.5 rounded font-bold"
+                        >
+                            <!--display complete button if task is not completed-->
+                            Complete
+                        </button>
+                        <button
+                            @click="gameStore.deleteTask(task.id)"
+                            class="bg-red-600 hover:bg-red-500 text-xs px-3 py-1.5 rounded font-bold"
+                        >
+                            Delete
+                        </button>
+                    </div>
                 </li>
             </ul>
         </div>

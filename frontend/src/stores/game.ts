@@ -71,5 +71,13 @@ export const useGameStore = defineStore("game", {
                 console.error("Error completing task:", error);
             }
         },
+        async deleteTask(taskId: number) {
+            try {
+                await axios.delete(`/api/tasks/${taskId}/delete`);
+                this.tasks = this.tasks.filter((t) => t.id !== taskId);
+            } catch (error) {
+                console.error("Error deleting task:", error);
+            }
+        },
     },
 });

@@ -194,3 +194,35 @@ def complete_task2(
         jsonify({"message": "Task completed successfully", "xp_reward": xp_reward}),
         200,
     )  # return success response with XP reward for completing the task
+
+
+@tasks_bp.route("/<int:task_id>/delete", methods=["DELETE"])
+def delete_task(task_id):  # function to delete a task for the hardcoded test user
+    current_user_id = 1
+    task = Task.query.filter_by(
+        id=task_id, user_id=current_user_id).first_or_404()
+
+    db.session.delete(task)
+    db.session.commit()
+
+    return jsonify({"message": "Quest deleted successfully"}), 200
+
+
+@tasks_bp.route("/tasks/<int:task_id>", methods=["DELETE"])
+@jwt_required()
+def delete_task2(task_id):  # function to delete a task for the authenticated user
+    user_id = get_jwt_identity()  # get user id from JWT token
+    task = Task.query.filter_by(
+        id=task_id, user_id=user_id
+    ).first()  # find task by id and user id in database
+
+    if not task:  # if task is not found in database, return error response
+        return jsonify({"error": "Task not found"}), 404
+
+    db.session.delete(task)  # delete task from database
+    db.session.commit()  # commit changes to database
+
+    return (
+        jsonify({"message": "Task deleted successfully"}),
+        200,
+    )  # return success response
