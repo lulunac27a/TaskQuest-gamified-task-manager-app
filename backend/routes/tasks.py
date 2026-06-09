@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from extensions import db
-from models import db, User, Task
+from models import User, Task
 from math import floor
 
 tasks_bp = Blueprint("tasks", __name__)
