@@ -15,7 +15,7 @@ onMounted(() => {
         <div class="mb-6 border-b border-slate-700 pb-4">
             <h2 class="text-2xl font-bold mb-2">🛡️ Hero Dashboard</h2>
             <div class="flex justify-between text-sm mb-1">
-                <span>Level {{ gameStore.user.level }}</span>
+                <span>Level {{ gameStore.user.level.toLocaleString() }}</span>
             </div>
             <!-- XP Progress Bar -->
             <div class="w-full bg-slate-700 h-4 rounded-full overflow-hidden">
