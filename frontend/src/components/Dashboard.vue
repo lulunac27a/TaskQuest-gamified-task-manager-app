@@ -25,7 +25,8 @@ onMounted(() => {
                 ></div>
             </div>
             <p class="text-xs text-slate-400 mt-1 text-right">
-                {{ gameStore.user.xp }} / {{ gameStore.user.level * 100 }} XP
+                {{ gameStore.user.xp.toLocaleString() }} /
+                {{ (gameStore.user.level * 100).toLocaleString() }} XP
             </p>
         </div>
         <!-- Active Quests -->
