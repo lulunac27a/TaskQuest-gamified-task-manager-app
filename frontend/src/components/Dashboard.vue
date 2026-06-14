@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import { useGameStore } from "../stores/game";
-const gameStore = useGameStore();
+const gameStore = useGameStore(); //use the game store to fetch user profile and tasks
 onMounted(() => {
-    gameStore.fetchProfile();
+    //when the component is mounted, fetch the user profile and tasks
+    gameStore.fetchProfile(); //fetch user profile and tasks when the component is mounted
 });
 </script>
 
