@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import { useGameStore } from "../stores/game";
 
-const gameStore = useGameStore();
+const gameStore = useGameStore(); //use the game store to create new tasks
 const title = ref("");
 const description = ref("");
 const difficulty = ref(1);
@@ -10,6 +10,7 @@ const intensity = ref(1);
 const isSubmitting = ref(false);
 
 const handleSubmit = async () => {
+    //handle form submission to create a new task
     if (!title.value) return;
     isSubmitting.value = true;
     await gameStore.createTask(
@@ -34,7 +35,6 @@ const handleSubmit = async () => {
             <h3 class="text-md font-bold mb-3 text-purple-400">
                 📜 Forge New Quest
             </h3>
-
             <div class="flex flex-col gap-3 md:flex-row">
                 <!-- Task Input -->
                 <input
@@ -44,7 +44,6 @@ const handleSubmit = async () => {
                     class="flex-1 bg-slate-700 text-white rounded p-2 text-sm border border-slate-600 focus:outline-none focus:border-purple-500"
                     required
                 />
-
                 <!-- Difficulty Select -->
                 <select
                     v-model="difficulty"
@@ -75,7 +74,8 @@ const handleSubmit = async () => {
                     :disabled="isSubmitting"
                     class="bg-purple-600 hover:bg-purple-500 disabled:opacity-50 text-white text-sm font-bold px-4 py-2 rounded transition-colors"
                 >
-                    {{ isSubmitting ? "Forging..." : "Add Quest" }}
+                    {{ isSubmitting ? "Forging..." : "Add Quest"
+                    }}<!--change button text when submitting-->
                 </button>
             </div>
         </form>
