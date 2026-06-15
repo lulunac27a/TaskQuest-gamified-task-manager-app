@@ -16,10 +16,13 @@ onMounted(() => {
         <div class="mb-6 border-b border-slate-700 pb-4">
             <h2 class="text-2xl font-bold mb-2">🛡️ Hero Dashboard</h2>
             <div class="flex justify-between text-sm mb-1">
-                <span>Level {{ gameStore.user.level.toLocaleString() }}</span>
+                <!--level display--><span
+                    >Level {{ gameStore.user.level.toLocaleString() }}</span
+                >
             </div>
             <!-- XP Progress Bar -->
             <div class="w-full bg-slate-700 h-4 rounded-full overflow-hidden">
+                <!--progress bar display-->
                 <div
                     class="bg-purple-500 h-full transition-all duration-500"
                     :style="{ width: `${gameStore.xpProgress}%` }"
@@ -56,12 +59,11 @@ onMounted(() => {
                         </span>
                     </div>
                     <div class="flex gap-2">
-                        <button
+                        <!--display complete button if task is not completed--><button
                             v-if="!task.is_completed"
                             @click="gameStore.completeTask(task.id)"
                             class="bg-emerald-600 hover:bg-emerald-500 text-xs px-3 py-1.5 rounded font-bold"
                         >
-                            <!--display complete button if task is not completed-->
                             Complete
                         </button>
                         <button
