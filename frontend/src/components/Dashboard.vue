@@ -66,7 +66,7 @@ onMounted(() => {
                         >
                             Complete
                         </button>
-                        <button
+                        <!--delete button--><button
                             @click="gameStore.deleteTask(task.id)"
                             class="bg-red-600 hover:bg-red-500 text-xs px-3 py-1.5 rounded font-bold"
                         >
