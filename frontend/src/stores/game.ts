@@ -37,7 +37,6 @@ export const useGameStore = defineStore("game", {
                 // Fetch user profile from the backend
                 const profileRes = await axios.get("/api/user/profile");
                 this.user = profileRes.data;
-
                 // Simultaneously fetch tasks from our new route
                 const tasksRes = await axios.get("/api/tasks");
                 this.tasks = tasksRes.data;
@@ -74,6 +73,7 @@ export const useGameStore = defineStore("game", {
                     task.completed = true;
                 }
                 if (res.data.leveledUp) {
+                    //alert the user if they leveled up after completing the task
                     alert("Congratulations! You leveled up!");
                 }
             } catch (error) {
