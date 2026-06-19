@@ -18,6 +18,7 @@ export const useGameStore = defineStore("game", {
     //define a Pinia store named 'game'
     state: () => ({
         user: {
+            //initialize user state with default values
             level: 1,
             xp: 0,
         } as UserState,
