@@ -22,7 +22,7 @@ def create_app():  # function to create and configure the Flask app
     CORS(app)  # enable CORS for all routes
 
     @app.route("/api/user/profile", methods=["GET"])
-    def get_profile():
+    def get_profile():  # route to get user profile information including username, level, and XP for the hardcoded test user
         user = db.session.get(User, 1)  # Fetch our hardcoded test hero
         return (
             jsonify(
@@ -36,7 +36,7 @@ def create_app():  # function to create and configure the Flask app
         )
 
     @app.route("/", methods=["GET"])
-    def backend_status():
+    def backend_status():  # simple route to check if backend is running and provide basic info about the API
         return (
             jsonify(
                 {
