@@ -72,5 +72,5 @@ def create_app():  # function to create and configure the Flask app
 if __name__ == "__main__":
     app = create_app()  # create app instance
     app.run(
-        host="127.0.0.1", port=5000, debug=True
-    )  # run app on localhost with debug mode enabled
+        host="127.0.0.1", port=5000, debug=False
+    )  # run app on localhost with debug mode disabled for production use
