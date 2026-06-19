@@ -3,10 +3,11 @@
 @tailwind utilities;
 
 body {
-    margin: 0;
-    background-color: #0f172a;
+    /*body styles*/
+    margin: 0; /*set margin to 0*/
+    background-color: #0f172a; /*set background color to dark blue*/
     font-family:
         system-ui,
         -apple-system,
-        sans-serif;
+        sans-serif; /*set font family to system-based font or sans-serif*/
 }
