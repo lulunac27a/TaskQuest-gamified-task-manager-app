@@ -50,12 +50,14 @@ onMounted(() => {
                                     task.is_completed,
                             }"
                         >
-                            {{ task.title }}
+                            {{ task.title
+                            }}<!--task title-->
                         </span>
                         <span
                             class="ml-2 text-xs px-2 py-0.5 rounded bg-amber-600"
                         >
-                            {{ task.difficulty }}
+                            {{ task.difficulty
+                            }}<!--task difficulty-->
                         </span>
                     </div>
                     <div class="flex gap-2">
