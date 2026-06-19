@@ -18,7 +18,7 @@ const handleSubmit = async () => {
         description.value,
         difficulty.value,
     );
-    title.value = "";
+    title.value = ""; //reset form fields after submission
     description.value = "";
     difficulty.value = 1;
     intensity.value = 1;
