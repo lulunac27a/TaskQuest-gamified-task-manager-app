@@ -35,9 +35,9 @@ def get_tasks():
                 {
                     "id": t.id,
                     "title": t.title,
-                    "difficulty": (
-                        int(t.difficulty) if str(t.difficulty).isdigit() else 2
-                    ),
+                    "difficulty": int(t.difficulty)
+                    if str(t.difficulty).isdigit()
+                    else 2,
                     "is_completed": t.is_completed,
                 }
                 for t in tasks
@@ -52,6 +52,7 @@ def create_task():  # function to create a new task for the hardcoded test user
     current_user_id = 1
     data = request.get_json() or {}
     title = data.get("title", "").strip()
+    # validate difficulty input and ensure it is an integer between 1 and 6, default to 2 (Medium) if not provided or invalid
     try:
         difficulty_input = int(data.get("difficulty", 2))
         if difficulty_input < 1 or difficulty_input > 6:
@@ -64,10 +65,11 @@ def create_task():  # function to create a new task for the hardcoded test user
     if not title:
         return jsonify({"error": "Quest title is required"}), 400
 
-    new_task = Task(user_id=current_user_id, title=title,
-                    difficulty=difficulty_input)
-    db.session.add(new_task)
-    db.session.commit()
+    new_task = Task(
+        user_id=current_user_id, title=title, difficulty=difficulty_input
+    )  # create new task with provided title and difficulty for the hardcoded test user
+    db.session.add(new_task)  # add new task to database session
+    db.session.commit()  # commit changes to database to save new task and generate task ID
 
     return (
         jsonify(
@@ -147,7 +149,9 @@ def complete_task(
     )
 
     task.is_completed = True
-    leveled_up = user.add_xp(rewards)
+    leveled_up = user.add_xp(
+        rewards
+    )  # add XP to user and check if they leveled up, returns True if user leveled up, False otherwise
 
     db.session.commit()
 
@@ -200,7 +204,8 @@ def complete_task2(
 def delete_task(task_id):  # function to delete a task for the hardcoded test user
     current_user_id = 1
     task = Task.query.filter_by(
-        id=task_id, user_id=current_user_id).first_or_404()
+        id=task_id, user_id=current_user_id
+    ).first_or_404()  # find task by id and user id in database, return 404 error if not found
 
     db.session.delete(task)
     db.session.commit()
